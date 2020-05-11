@@ -1,16 +1,8 @@
 import numpy as np
-import time
 import os
-import json
-import datetime
 import scipy.linalg as scipy_linalg
 import heapq
 import matplotlib.pyplot as plt
-import gensim
-
-from bm25_weighting import bm25_weighting
-from write_float import document_embedding_date
-from preprocessing_utils import preprocessing_utils
 
 class query_trend():
 
@@ -31,7 +23,7 @@ class query_trend():
 
         res = []
         counter = 0
-        while counter < top_N:
+        while trend and counter < top_N:
             pair = heapq.heappop(trend)
             res.append((-pair[0], pair[1]))
             counter += 1
@@ -49,4 +41,5 @@ class query_trend():
         plt.ylabel('Similarity', fontsize=10)
         filename = query.rstrip().replace(" ", "_") + '_.png'
         fig.savefig(filename)
-        return os.getcwd() + "\\" + filename
+        # It will return the file name rather than the file's absolute path
+        return filename  #os.path.join(os.getcwd(), filename)
